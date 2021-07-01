@@ -45,7 +45,7 @@ class PostController extends Controller
         $newPost-> fill($newPostData);
         $newPost-> save();
 
-        return redirect()-> route('admin.index');
+        return redirect()-> route('admin.show',$newPost->id);
     }
 
     /**
@@ -100,7 +100,7 @@ class PostController extends Controller
 
         $post->update($formData);
 
-        return redirect()->route("admin.home", $post->id);
+        return redirect()->route("admin.index", $post->id);
     }
 
     /**

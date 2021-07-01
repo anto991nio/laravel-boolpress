@@ -2,7 +2,9 @@
 
 @section('content')
 @include("partials.errorsAlert")
+<div class="container">
 
+<a href="{{ route('admin.index') }}">Torna alla home</a>
 <form action="{{ route('admin.update', $post->id) }}" method="post">
     @csrf
 
@@ -18,5 +20,5 @@
 </form>
 
 <script src={{asset('js/app.js')}}></script>
-
+</div>
 @endsection

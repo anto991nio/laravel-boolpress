@@ -9,12 +9,27 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <div class="post">
+                    <h1>Non sei loggato</h1>
+                    {{-- <a href="{{route("admin.create")}}">Crea un post</a> --}}
+                    {{-- @dump($posts) --}}
+                        @foreach($posts as $post)
+                            <h1>{{$post->title}}</h1>
+                            <p>{{$post->content}}</p>
+                           {{--  <h2><a href="{{ route('admin.edit', $post->id) }}">Modifica</a></h2> --}}
+                            
+
+                           {{--  @auth
+                                @include('partials/deleteBtn',["id" => $post->id])
+                            @endauth --}}
+                        @endforeach
+
+                    </div>
                 </div>
             </div>
         </div>
