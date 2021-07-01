@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+@include("partials.errorsAlert")
+
+<div class="container">
+
 <a href="{{ route('admin.index') }}">Torna alla home</a>
     <form action="{{ route('admin.store') }}" method="post">
         @csrf
@@ -14,5 +18,5 @@
         <input type="submit" value="Invia">
     </form>
     {{-- <script src={{asset('js/app.js')}}></script> --}}
-
+</div>
 @endsection

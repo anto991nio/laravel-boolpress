@@ -41,6 +41,11 @@ class PostController extends Controller
     {
         $newPostData = $request->all();
 
+        $request->validate([
+            "title"=> "required|max:100",
+            "content"=> "required",
+        ]);
+
         $newPost = new Post();
         $newPost-> fill($newPostData);
         $newPost-> save();
