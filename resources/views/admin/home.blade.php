@@ -20,26 +20,30 @@
                         @auth
                         <a href="{{route("admin.create")}}">Crea un post</a>
                         @endauth
-                        @foreach($posts as $post)
                         <div class="container">
+                            @foreach($posts as $post)
+
 
                             <div class="border row">
                                 <div class="col">
                                     <h1 class="text-primary">Titolo : {{$post->title}}</h1>
                                     <h3 class="text-secondary">Contenuto : {{$post->content}}</h3>
+                                    <h4>UTENTE: {{ $post->user->name }}</h4>
+
+                                    <p>{{ $post->category ? $post->category->name : 'none' }}</p>
                                 </div>
 
 
                                 @auth
                                 <div class="col row d-flex justify-content-around align-items-center">
-                                    <div >
-                                    <button type="button" class="btn btn-primary"><a class="text-light" href="{{ route('admin.edit', $post->id) }}">Modifica</a></button>
+                                    <div>
+                                        <button type="button" class="btn btn-primary"><a class="text-light" href="{{ route('admin.edit', $post->id) }}">Modifica</a></button>
                                     </div>
-                                    <div >
-                                    <button type="button" class="btn btn-secondary"><a class="text-light" href="{{ route('admin.show', $post->id) }}">Dettagli</a></button>
+                                    <div>
+                                        <button type="button" class="btn btn-secondary"><a class="text-light" href="{{ route('admin.show', $post->id) }}">Dettagli</a></button>
                                     </div>
-                                    <div >
-                                    @include('partials/deleteBtn',["id" => $post->id])
+                                    <div>
+                                        @include('partials/deleteBtn',["id" => $post->id])
                                     </div>
                                 </div>
                                 @endauth
