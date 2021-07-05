@@ -8,16 +8,21 @@ use App\User;
 class Post extends Model
 {
     protected $fillable = [
-        'title', 'content','user_id',"category_id"
+        'title', 'content', 'user_id', "category_id","post_id","tag_id"
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo("App\User");
-
     }
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo("App\Category");
-      }
-
+    }
+    
+    public function tags()
+    {
+        return $this->belongsToMany("App\Tag");
+    }
 }

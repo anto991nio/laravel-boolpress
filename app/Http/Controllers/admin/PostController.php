@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Tag;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,8 +41,10 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.create', ["categories" => $categories]);
+
+        return view('admin.create', ["categories" => $categories, "tags"=>$tags]);
     }
 
     /**
@@ -57,13 +60,17 @@ class PostController extends Controller
         $request->validate([
             "title"=> "required|max:100",
             "content"=> "required",
-            'category_id' => "nullable|exists:categories,id"
+            'category_id' => "nullable|exists:categories,id",
+            
         ]);
-
+        
         $newPost = new Post();
         $newPost-> fill($newPostData);
         $newPost-> user_id=$request->user()->id;
         $newPost-> save();
+        $newPost->tags()->attach($newPostData["tags"]);
+
+        
         return redirect()-> route('admin.show',$newPost->id);
     }
 
@@ -73,7 +80,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post, Tag $tag)
     {
         $user=$post->user;
         
@@ -86,7 +93,8 @@ class PostController extends Controller
         
         return view('admin.show' , [
             "post" => $post,
-            "user" =>$user
+            "user" =>$user,
+            "tag" =>$tag
             
 
         ]);
@@ -100,10 +108,12 @@ class PostController extends Controller
      */
     public function edit($id)
     {   $categories = Category::all();
+        $tags = Tag::all();
         $post = Post::findOrFail($id);
+
         return view("admin.edit", [
             "post" => $post
-        ],["categories" => $categories]);
+        ],["categories" => $categories,"tags"=>$tags]);
     }
 
     /**
@@ -125,6 +135,8 @@ class PostController extends Controller
 
 
         $post->update($formData);
+
+        $post->tags()->sync($formData["tags"]);
 
         return redirect()->route("admin.index", $post->id);
     }

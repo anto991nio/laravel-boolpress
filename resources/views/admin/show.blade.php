@@ -13,6 +13,10 @@
         <li>MODIFICATO: {{ $post->updated_at }}</li>
         <li>UTENTE: {{ $user->name }}</li>
         <li>CATEGORIA:{{ $post->category ? $post->category->name : 'none' }}</li>
+        @foreach($post->tags as $tag)
+        <li class="badge badge-primary">{{ $tag->name }}</li>
+        @endforeach
+
 
 
 
