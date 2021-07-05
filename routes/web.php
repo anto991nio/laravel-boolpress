@@ -26,6 +26,7 @@ Route::prefix('admin')
     ->name("admin.")
     ->group(function () {
         Route::get('/', 'PostController@index')->name('index');
+        Route::get('/account', 'PostController@account')->name('account');
         Route::get('/tags', 'TagController@index')->name('tags.index');
         Route::post("/post", "PostController@store")->name("store");
 

@@ -2,33 +2,56 @@
 
 @section('content')
 <div class="container">
-    <a href="{{ route('admin.index') }}">Torna alla home</a>
 
-    <ul>
+    <div class="text-right">
 
-        <li>ID: {{ $post->id }}</li>
-        <li>TITOLO: {{ $post->title }}</li>
-        <li>CONTENUTO: {{ $post->content }}</li>
-        <li>CREATO: {{ $post->created_at }}</li>
-        <li>MODIFICATO: {{ $post->updated_at }}</li>
-        <li>UTENTE: {{ $user->name }}</li>
-        <li>CATEGORIA:{{ $post->category ? $post->category->name : 'none' }}</li>
-        @foreach($post->tags as $tag)
-        <li class="badge badge-primary">{{ $tag->name }}</li>
-        @endforeach
+        <button type="button" class="btn btn-primary"><a href="{{ route('admin.index') }}" class="text-light">Torna alla home</a></button>
+
+    </div>
+    <div class="container post-container">
+
+        <div class="border row">
+            <div class="col">
+                <h4 class="text-secondary">ID: {{ $post->id }}</h4>
+
+                <div class="text-center">
+                    <h5 class="text-primary">TITOLO: {{ $post->title }}</h5>
+                    <h5 class="text-secondary">CONTENUTO: {{ $post->content }}</h5>
+                    <h5 class="text-secondary">CREATO: {{ $post->created_at }}</h5>
+                    <h5 class="text-secondary">MODIFICATO: {{ $post->updated_at }}</h5>
+                    <h5 class="text-secondary">UTENTE: {{ $user->name }}</h5>
+                    <p class="text-left"> CATEGORIA:{{ $post->category ? $post->category->name : 'none' }}</p>
+                    TAG:
+                    @foreach($post->tags as $tag)
+                    <p class="badge badge-primary ">{{ $tag->name }}</p>
+                    @endforeach
+                </div>
 
 
 
 
-        <div class="col row d-flex align-items-center">
-            <div>
-                <button type="button" class="btn btn-primary"><a class="text-light" href="{{ route('admin.edit', $post->id) }}">Modifica</a></button>
             </div>
 
+
+
+        </div>
+        @auth
+        <div class="btn-row row d-flex justify-content-around align-items-center">
+            @if ((Auth::user()->id)==$post->user->id)
+            <div>
+                <button type="button" class="btn btn-secondary"><a class="text-light" href="{{ route('admin.edit', $post->id) }}"><i class="fa fa-pencil-square text-secondary" aria-hidden="true"> Modifica</i></a></button>
+            </div>
             <div>
                 @include('partials/deleteBtn',["id" => $post->id])
             </div>
+
+            @endif
+
+
         </div>
-    </ul>
+        @endauth
+    </div>
+
+
 </div>
 @endsection

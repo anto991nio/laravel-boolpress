@@ -6,9 +6,12 @@
 <div class="container">
 
     <a href="{{ route('admin.index') }}">Torna alla home</a>
-    <form action="{{ route('admin.store') }}" method="post">
+    <form action="{{ route('admin.store') }}" method="post" enctype="multipart/formdata">
         @csrf
-
+        <div>
+            <label style="width:100px" for="image">Carica un immagine</label>
+            <input type="file" name="image" id="image">
+        </div>
         <div>
             <label style="width:100px" for="title">Title</label>
             <input type="text" name="title" id="title">

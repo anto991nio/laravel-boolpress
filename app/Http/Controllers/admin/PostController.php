@@ -19,18 +19,12 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, Post $post)
-    {
-        $user=$post->user;
-        
-        $data = [
-            'posts' => Post::orderBy("created_at", "DESC")
-                ->where("user_id", $request->user()->id)
-                ->get(),
-                "user"=>$user,
-                
-        ];
-
-        return view("admin.home", $data);
+    { $data = [
+        'posts' => Post::all()
+    ];
+    
+    return view("admin.home", $data);
+       
     }
 
     /**
@@ -154,5 +148,20 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route("admin.index");
+    }
+
+    public function account(Request $request, Post $post)
+    {
+         $user=$post->user;
+        
+        $data = [
+            'posts' => Post::orderBy("created_at", "DESC")
+                ->where("user_id", $request->user()->id)
+                ->get(),
+                "user"=>$user,
+                
+        ];
+
+        return view("admin.account", $data);
     }
 }
