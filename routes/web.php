@@ -20,6 +20,14 @@ Route::get('/post', "PostController@index")->name("post");
 
 Auth::routes();
 
+/* Route::prefix('api')
+    ->namespace('api')
+    ->name("api.")
+    ->group(function () {
+        Route::get('/post', 'Api\PostController@index');
+    }); */
+
+
 Route::prefix('admin')
     ->namespace('Admin')
     ->middleware('auth')
@@ -29,7 +37,6 @@ Route::prefix('admin')
         Route::get('/account', 'PostController@account')->name('account');
         Route::get('/tags', 'TagController@index')->name('tags.index');
         Route::post("/post", "PostController@store")->name("store");
-
 
         Route::get("/post/create", "PostController@create")->name("create");
 
@@ -41,11 +48,8 @@ Route::prefix('admin')
 
         Route::get('/post/{post}/edit', "PostController@edit")->name("edit");
 
-        //Genera tutte le rotte necessarie per la crud dei posts
+        
     });
-
-
-
 
 
 

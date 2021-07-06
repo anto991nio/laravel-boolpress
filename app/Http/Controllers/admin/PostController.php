@@ -18,7 +18,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Post $post)
+    public function index()
     { $data = [
         'posts' => Post::all()
     ];
@@ -51,6 +51,9 @@ class PostController extends Controller
     {
         $newPostData = $request->all();
 
+       
+        /* $request->file->extension_loaded()->store('public');
+ */
         $request->validate([
             "title"=> "required|max:100",
             "content"=> "required",
@@ -152,13 +155,13 @@ class PostController extends Controller
 
     public function account(Request $request, Post $post)
     {
-         $user=$post->user;
+         
         
         $data = [
             'posts' => Post::orderBy("created_at", "DESC")
                 ->where("user_id", $request->user()->id)
                 ->get(),
-                "user"=>$user,
+                
                 
         ];
 
