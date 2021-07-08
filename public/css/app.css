@@ -14031,3 +14031,10 @@ a.text-dark:focus {
   background-color: lightgrey;
 }
 
+.text-left img {
+  height: 300px;
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+

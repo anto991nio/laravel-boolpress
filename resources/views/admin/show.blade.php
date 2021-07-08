@@ -14,12 +14,15 @@
             <div class="col">
                 <h4 class="text-secondary">ID: {{ $post->id }}</h4>
 
-                <div class="text-center">
+                <div class="text-left">
                     <h5 class="text-primary">TITOLO: {{ $post->title }}</h5>
                     <h5 class="text-secondary">CONTENUTO: {{ $post->content }}</h5>
                     <h5 class="text-secondary">CREATO: {{ $post->created_at }}</h5>
                     <h5 class="text-secondary">MODIFICATO: {{ $post->updated_at }}</h5>
                     <h5 class="text-secondary">UTENTE: {{ $user->name }}</h5>
+                    <div>
+                            <img src="{{ $post->image_url ? asset('storage/' . $post->image_url) : 'https://www.linga.org/site/photos/Largnewsimages/image-not-found.png'}}" alt="">
+                            </div>
                     <p class="text-left"> CATEGORIA:{{ $post->category ? $post->category->name : 'none' }}</p>
                     TAG:
                     @foreach($post->tags as $tag)

@@ -10,7 +10,7 @@
         @csrf
         <div>
             <label style="width:100px" for="image">Carica un immagine</label>
-            <input type="file" name="file" id="image">
+            <input type="file" name="image" id="image">
         </div> 
         <div>
             <label style="width:100px" for="title">Title</label>

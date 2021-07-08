@@ -8,6 +8,7 @@ use App\Tag;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
@@ -58,8 +59,14 @@ class PostController extends Controller
             "title"=> "required|max:100",
             "content"=> "required",
             'category_id' => "nullable|exists:categories,id",
+            "image" => "nullable"
             
         ]);
+
+        if(key_exists("image",$newPostData)){
+        $storageImage = Storage::put("postImages", $newPostData["image"]);
+        $newPostData["image_url"] = $storageImage;
+        }
         
         $newPost = new Post();
         $newPost-> fill($newPostData);
@@ -130,6 +137,15 @@ class PostController extends Controller
             "content"=> "required",
         ]);
 
+        if(key_exists("image",$formData)){
+            if($post->image_url){
+                Storage::delete($post->image_url);
+            }
+        $storageImage = Storage::put("postImages", $formData["image"]);
+
+        $formData["image_url"] = $storageImage;
+        }
+    
 
         $post->update($formData);
 

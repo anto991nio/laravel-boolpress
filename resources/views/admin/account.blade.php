@@ -18,6 +18,9 @@
                         <h4 class="text-secondary">Per poter interagire con i post è necessario loggarti</h4>
                         @endguest
                         @auth
+                        <div>
+                            <img src="{{asset(Auth::user()->image_user_url )}} " alt="">
+                            </div>
                         <div class="text-center">
                             <h3>Nome : {{Auth::user()->name}}</h3>
                             <h3>Email : {{Auth::user()->email}}</h3>
@@ -43,9 +46,13 @@
                     <div class="col">
                         <h4 class="text-secondary">{{ $post->user->name }}</h4>
 
-                        <div class="text-center">
+                        <div class="text-left">
                             <h5 class="text-primary">{{$post->title}}</h5>
                             <h5 class="text-secondary">{{$post->content}}</h5>
+                            
+                            <div>
+                            <img src="{{ $post->image_url ? asset('storage/' . $post->image_url) : 'https://www.linga.org/site/photos/Largnewsimages/image-not-found.png'}}" alt="">
+                            </div>
                             <p class="text-left"> Categoria: {{ $post->category ? $post->category->name : 'none' }}</p>
                             TAG: 
                             @foreach($post->tags as $tag)
