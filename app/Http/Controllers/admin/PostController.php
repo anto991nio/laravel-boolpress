@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\Tag;
 use App\Category;
+use App\Mail\NewPostEmail;
+use App\Mail\RegisteredMail;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -60,7 +64,7 @@ class PostController extends Controller
             "content"=> "required",
             'category_id' => "nullable|exists:categories,id",
             "image" => "nullable",
-            "tags"=> "required"
+            
             
         ]);
 
@@ -68,14 +72,18 @@ class PostController extends Controller
         $storageImage = Storage::put("postImages", $newPostData["image"]);
         $newPostData["image_url"] = $storageImage;
         }
+
+        
         
         $newPost = new Post();
         $newPost-> fill($newPostData);
         $newPost-> user_id=$request->user()->id;
         $newPost-> save();
-        $newPost->tags()->attach($newPostData["tags"]);
+        if (isset($newPostData['tags'])) {
+            $newPost->tags()->sync($newPostData['tags']);
+        }
 
-        
+        /* Mail::to("admin@gmail.com")->send(new RegisteredMail($newPost));  */
         return redirect()-> route('admin.show',$newPost->id);
     }
 
@@ -136,7 +144,7 @@ class PostController extends Controller
         $request->validate([
             "title"=> "required|max:255",
             "content"=> "required",
-            "tags"=> "required"
+            
         ]);
 
         if(key_exists("image",$formData)){
@@ -151,7 +159,9 @@ class PostController extends Controller
 
         $post->update($formData);
 
-        $post->tags()->sync($formData["tags"]);
+        if (isset($newPostData['tags'])) {
+            $post->tags()->sync($newPostData['tags']);
+        }
 
         return redirect()->route("admin.index", $post->id);
     }
