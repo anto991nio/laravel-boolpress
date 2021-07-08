@@ -136,6 +136,7 @@ class PostController extends Controller
         $request->validate([
             "title"=> "required|max:255",
             "content"=> "required",
+            "tags"=> "required"
         ]);
 
         if(key_exists("image",$formData)){
