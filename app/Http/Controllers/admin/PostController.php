@@ -59,7 +59,8 @@ class PostController extends Controller
             "title"=> "required|max:100",
             "content"=> "required",
             'category_id' => "nullable|exists:categories,id",
-            "image" => "nullable"
+            "image" => "nullable",
+            "tags"=> "required"
             
         ]);
 
